@@ -1,9 +1,17 @@
 package matrix
 
-func vectomat(a []float64) Matrix {
+func vectomat(a Vector) Matrix {
 	matrix := make(Matrix, 1)
 	matrix[0] = a
 	return matrix
+}
+
+func mattovec(a Matrix) Vector {
+	vector := make(Vector, 0)
+	for _, row := range a {
+		vector = append(vector, row...)
+	}
+	return vector[:len(vector):len(vector)]
 }
 
 func t(a Matrix) Matrix {

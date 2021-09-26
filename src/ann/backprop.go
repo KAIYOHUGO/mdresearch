@@ -1,13 +1,17 @@
 package ann
 
-import "research/src/matrix"
+import (
+	"research/src/matrix"
+)
 
-func (s *ANN) predict() {
-	for i, layer := range s.layer {
-		value := matrix.MultMatrix(s.layer[i-1].Nodes, layer.Weights)
-		if layer.Act {
-			matrix.CalcFn(value, s.api.ActFn)
-		}
-		layer.Nodes = value
+func (s *ANN) backproperror(e matrix.Vector) {
+	s.layer[len(s.layer)-1].Error = matrix.VecToMat(e)
+	for i := len(s.layer) - 1; i > 0; i-- {
+		s.layer[i-1].Error = matrix.T(matrix.MultMatrix(s.layer[i].Weights, s.layer[i].Error))
 	}
+}
+
+// ? how calc partical
+func (s *ANN) backprop() {
+	// TODO add backprop the weight
 }
